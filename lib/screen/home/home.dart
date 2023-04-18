@@ -50,7 +50,8 @@ class _HomeState extends State<Home> {
                     value.length,
                     (index) => InkWell(
                           onTap: () {
-                            print(value.length);
+                            Navigator.pushNamed(context, '/story',
+                                arguments: value[index]);
                           },
                           child: Container(
 

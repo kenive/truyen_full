@@ -12,7 +12,13 @@ class HomeLogic extends ChangeNotifier {
   List<Category> dataCategory = [];
 
   void getCategory() async {
-    await service.getCategory().then((value) => dataCategory = value);
+    try {
+      await service.getCategory().then((value) => dataCategory = value);
+
+      notifyListeners();
+    } catch (e) {
+      debugPrint('$e');
+    }
     notifyListeners();
   }
 }
