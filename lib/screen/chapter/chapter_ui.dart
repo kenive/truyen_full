@@ -4,6 +4,8 @@ import 'package:truyen_full/model/chapter/chapter.dart';
 import 'package:truyen_full/model/story/story.dart';
 import 'package:truyen_full/service/category/category_api.dart';
 import 'package:truyen_full/themes/colors.dart';
+
+import '../../widgets/image_widget.dart';
 part 'chapter_logic.dart';
 
 class ChapTerUI extends StatefulWidget {
@@ -30,7 +32,17 @@ class _ChapTerUIState extends State<ChapTerUI> {
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: AppBar(
-          backgroundColor: AppColors.green,
+          backgroundColor: AppColors.white,
+          elevation: 1,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: AppColors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -49,8 +61,12 @@ class _ChapTerUIState extends State<ChapTerUI> {
                       child: ClipRRect(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(50)),
-                          child: Image.network(arg.poster,
-                              width: 100, height: 100, fit: BoxFit.cover)),
+                          child: ImageCustom(
+                            urlImage: arg.poster,
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          )),
                     ),
                     Text(
                       arg.title,
@@ -206,13 +222,24 @@ class _ChapTerUIState extends State<ChapTerUI> {
                       padding: const EdgeInsets.all(10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text(
+                        children: [
+                          const Text(
                             'Các chương mới nhất',
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w500),
                           ),
-                          Text('Xem thêm')
+                          InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/lstChapter',
+                                    arguments: logic.dataArg);
+                              },
+                              child: const Text(
+                                'Xem thêm',
+                                style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500),
+                              ))
                         ],
                       ),
                     ),

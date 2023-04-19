@@ -30,9 +30,16 @@ class _HomeState extends State<Home> {
         child: Scaffold(
           backgroundColor: AppColors.white,
           appBar: AppBar(
-            title: const Text('Danh mục'),
-            backgroundColor: AppColors.green,
+            title: const Text(
+              'Danh mục',
+              style: TextStyle(
+                  color: AppColors.primary,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600),
+            ),
+            backgroundColor: AppColors.white,
             bottomOpacity: 0,
+            elevation: 1,
           ),
           body: Selector<HomeLogic, List<Category>>(
             selector: (p0, p1) => p1.dataCategory,
@@ -54,10 +61,6 @@ class _HomeState extends State<Home> {
                                 arguments: value[index]);
                           },
                           child: Container(
-
-                              // width: MediaQuery.of(context).size.width * 0.4,
-                              // margin:
-                              //     const EdgeInsets.only(left: 20, bottom: 10),
                               decoration: BoxDecoration(
                                   color: AppColors.backgroundColor,
                                   borderRadius: BorderRadius.circular(10)),

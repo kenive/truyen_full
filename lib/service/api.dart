@@ -1,6 +1,7 @@
 import 'dart:async';
-import "package:dio/dio.dart";
 import 'package:flutter/foundation.dart';
+import "package:dio/dio.dart";
+import '../widgets/loadding_widget.dart';
 
 class ClientApi {
   Dio init() {
@@ -9,7 +10,7 @@ class ClientApi {
 
     ///url api
     _dio.options.baseUrl = "https://truyen-clone.getdata.one";
-    // _dio.options.receiveTimeout = 1000001;
+    _dio.options.receiveTimeout = 100000;
     return _dio;
   }
 }
@@ -18,9 +19,22 @@ class CustomInterceptors extends QueuedInterceptor {
   final Dio _dio;
   CustomInterceptors(this._dio);
 
+  void showLoading() {
+    if (_dio.options.headers['isLoading'] ?? true) {
+      Loading.show();
+    }
+  }
+
+  void hideLoading() {
+    if (_dio.options.headers['isLoading'] ?? true) {
+      Loading.hide();
+    }
+  }
+
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
+    showLoading();
     debugPrint(
       'REQUEST[${options.method}] => PATH: ${options.path}',
     );
@@ -30,6 +44,7 @@ class CustomInterceptors extends QueuedInterceptor {
 
   @override
   Future onResponse(Response response, ResponseInterceptorHandler handler) {
+    hideLoading();
     if (kDebugMode) {
       print("In File: api_client.dart, Line: 21 $response ");
       print(
@@ -43,6 +58,7 @@ class CustomInterceptors extends QueuedInterceptor {
 
   @override
   Future onError(DioError err, ErrorInterceptorHandler handler) async {
+    hideLoading();
     debugPrint(
       'ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}',
     );

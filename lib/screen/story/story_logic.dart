@@ -11,7 +11,7 @@ class StoryLogic extends ChangeNotifier {
     });
   }
 
-  final CategoryApi service = CategoryApi.client(isLoading: false);
+  final CategoryApi service = CategoryApi.client(isLoading: true);
 
   List<StoryModel> data = [];
 

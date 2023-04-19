@@ -11,11 +11,17 @@ class ChapterDetailLogic extends ChangeNotifier {
     });
   }
 
-  final CategoryApi service = CategoryApi.client(isLoading: false);
+  final CategoryApi service = CategoryApi.client(isLoading: true);
 
   ChapterIDModel? data;
 
   bool dark = false;
+
+  bool checkHorizontal = false;
+
+  double count = 18;
+
+  String font = '';
 
   void getChapterDetail(String id) async {
     try {
@@ -29,8 +35,6 @@ class ChapterDetailLogic extends ChangeNotifier {
     }
   }
 
-  double count = 18;
-
   void tang() {
     count++;
     notifyListeners();
@@ -43,6 +47,30 @@ class ChapterDetailLogic extends ChangeNotifier {
 
   void giam() {
     count--;
+    notifyListeners();
+  }
+
+  void checkFullScreen() {
+    checkHorizontal = !checkHorizontal;
+    checkHorizontal
+        ? SystemChrome.setPreferredOrientations(
+            [DeviceOrientation.landscapeRight])
+        : SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    notifyListeners();
+  }
+
+  void changFont(int value) {
+    if (value == 0) {
+      font = '';
+      notifyListeners();
+      return;
+    }
+    if (value == 1) {
+      font = GoogleFonts.lato().fontFamily!;
+      notifyListeners();
+      return;
+    }
+    font = GoogleFonts.montserrat().fontFamily!;
     notifyListeners();
   }
 }

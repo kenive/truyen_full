@@ -5,6 +5,7 @@ import 'package:truyen_full/model/story/story.dart';
 import 'package:truyen_full/model/category.dart';
 import '../../service/category/category_api.dart';
 import '../../themes/colors.dart';
+import '../../widgets/image_widget.dart';
 part 'story_logic.dart';
 
 class ListStory extends StatefulWidget {
@@ -31,8 +32,24 @@ class _ListStoryState extends State<ListStory> {
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: AppBar(
-          title: Text(slug.name),
-          backgroundColor: AppColors.green,
+          elevation: 1,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: AppColors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          title: Text(
+            slug.name,
+            style: const TextStyle(
+                color: AppColors.primary,
+                fontSize: 20,
+                fontWeight: FontWeight.w600),
+          ),
+          backgroundColor: AppColors.white,
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -45,8 +62,6 @@ class _ListStoryState extends State<ListStory> {
                 children: List.generate(value.length, (index) {
                   return InkWell(
                     onTap: () {
-                      print(value[index].slug);
-                      print(value[index].id);
                       Navigator.pushNamed(context, '/chapter',
                           arguments: value[index]);
                     },
@@ -62,8 +77,12 @@ class _ListStoryState extends State<ListStory> {
                           ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(50)),
-                              child: Image.network(value[index].poster,
-                                  width: 80, height: 80, fit: BoxFit.cover)),
+                              child: ImageCustom(
+                                urlImage: value[index].poster,
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              )),
                           const SizedBox(
                             width: 15,
                           ),

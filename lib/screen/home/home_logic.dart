@@ -7,7 +7,7 @@ class HomeLogic extends ChangeNotifier {
     getCategory();
   }
 
-  final CategoryApi service = CategoryApi.client(isLoading: false);
+  final CategoryApi service = CategoryApi.client(isLoading: true);
 
   List<Category> dataCategory = [];
 
